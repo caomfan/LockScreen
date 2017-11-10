@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Data;
 using static LockScreen.LKBackGround;
 
@@ -42,6 +43,48 @@ namespace LockScreen.Converters
                     break;
             }
             return false;
+        }
+    }
+
+    public class TypeToVisible : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string parm = parameter.ToString();
+            switch (parm)
+            {
+                case "num": return((int)value == 101?Visibility.Visible:Visibility.Collapsed);
+                case "draw":return((int)value == 102 ?Visibility.Visible : Visibility.Collapsed); 
+                default:
+                    break;
+            }
+            return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class InvertVisible : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value.ToString() == Visibility.Visible.ToString())
+            {
+                return Visibility.Collapsed;
+            }
+            else
+            {
+                return Visibility.Visible;
+            }
+            throw new NotImplementedException();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

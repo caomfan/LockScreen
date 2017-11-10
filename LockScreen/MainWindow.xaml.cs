@@ -37,8 +37,11 @@ namespace LockScreen
         {
             OpenFileDialog of = new OpenFileDialog();
             of.Filter = LKBackGround.GetFilter((int)VM.BackType);
-            of.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            if(of.ShowDialog()==true)
+            if (!string.IsNullOrWhiteSpace(VM.FilePath))
+                of.InitialDirectory = System.IO.Path.GetDirectoryName(VM.FilePath);
+            else
+                of.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            if (of.ShowDialog() == true)
             {
                 VM.FilePath = of.FileName;
             }

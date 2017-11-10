@@ -24,6 +24,21 @@ namespace LockScreen
             InitializeComponent();
             screenUnlock.OnCheckedPoint += ScreenUnlock_OnCheckedPoint;
             screenUnlock.OnRememberPoint += ScreenUnlock_OnRememberPoint;
+
+            numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
+            this.DataContext = MainWindow.VM;
+        }
+
+        private void NumUnlock_UnLockStateEvent(object sender, EventArgs e)
+        {
+            if(sender.ToString()=="1")
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("解锁失败！");
+            }
         }
 
         /// <summary>
@@ -45,7 +60,7 @@ namespace LockScreen
         {
             if (e.Result)
             {
-                MessageBox.Show("密码解锁成功！");
+                this.Close();
             }
             else
             {

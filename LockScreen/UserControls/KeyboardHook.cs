@@ -71,9 +71,8 @@ namespace LockScreen.UserControls
                 if (OnKeyUpEvent != null && (wParam == Win32Api.WM_KEYUP || wParam == Win32Api.WM_SYSKEYUP))
                 {
                     // 此处触发键盘抬起事件
-                    OnKeyDownEvent(this, new KeyDownEvent() { KeyData = keyData });
+                    OnKeyUpEvent(this, new OnKeyUpEvent() { KeyData = keyData });
                 }
-
             }
 
             return Win32Api.CallNextHookEx(hHook, nCode, wParam, lParam);

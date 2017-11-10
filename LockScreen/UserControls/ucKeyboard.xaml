@@ -18,15 +18,35 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#7F808080"/>
+                </Trigger>
+               
+                <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                    <EventTrigger.Actions>
+                        
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
         </Style>
+        <Storyboard  x:Key="keyBoardEnter">
+            <DoubleAnimation Storyboard.TargetName="storykeyboard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].Y" From="20" To="0" Duration="00:00:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="storykeyboard" Storyboard.TargetProperty="(UIElement.Opacity)" From="0" To="1" Duration="00:00:0.2"/>
+        </Storyboard>
+        <Storyboard x:Key="keyBoardLeave">
+            <DoubleAnimation Storyboard.TargetName="storykeyboard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].Y" From="0" To="20" Duration="00:00:0.2"/>
+            <DoubleAnimation Storyboard.TargetName="storykeyboard" Storyboard.TargetProperty="(UIElement.Opacity)" From="1" To="0" Duration="00:00:0.2"/>
+        </Storyboard>
     </UserControl.Resources>
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox Height="30" Width="200" Tag="请输入密码" Background="#33000000">
+            <TextBox x:Name="txtPassword"  GotFocus="txtPassword_GotFocus" LostFocus="txtPassword_LostFocus"
+                         InputMethod.IsInputMethodEnabled="False" Height="30" Width="200" Tag="请输入密码" Padding="3 0" Background="#33000000">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}">
                         <Setter Property="BorderBrush" Value="#eaeaea"/>
@@ -47,7 +67,6 @@
                                         </Trigger>
                                         <Trigger Property="IsFocused" Value="True">
                                             <Setter Property="Background" Value="Transparent"/>
-
                                             <Setter Property="BorderBrush" Value="White"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
@@ -57,8 +76,7 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            <Button Content="确定" Height="30" Width="70" Margin="10 0" Background="Transparent">
-                
+            <Button Content="确定" Click="Button_Click" Height="30" Width="70" Margin="10 0" Background="Transparent" IsDefault="True">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Foreground" Value="White"/>
@@ -84,7 +102,15 @@
                 </Button.Style>
             </Button>
         </StackPanel>
-        <Grid Grid.Row="1" Width="838" Height="275" VerticalAlignment="Top" Margin="0 50 0 0">
+        <Grid Grid.Row="1" Focusable="False" x:Name="storykeyboard" Opacity="0" Width="838"  Height="275" VerticalAlignment="Top" Margin="0 50 0 0" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="20"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -109,85 +135,85 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="1.7*"/>
                 </Grid.ColumnDefinitions>
-                <Border Style="{StaticResource Key}">
+                <Border x:Name="key192" Style="{StaticResource Key}">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="~" Foreground="White"/>
                         <TextBlock Text="`" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="1">
+                <Border x:Name="key49" Style="{StaticResource Key}" Grid.Column="1">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="!" Foreground="White"/>
                         <TextBlock Text="1" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="2">
+                <Border x:Name="key50" Style="{StaticResource Key}" Grid.Column="2">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="@" Foreground="White"/>
                         <TextBlock Text="2" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="3">
+                <Border x:Name="key51" Style="{StaticResource Key}" Grid.Column="3">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="#" Foreground="White"/>
                         <TextBlock Text="3" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="4">
+                <Border x:Name="key52" Style="{StaticResource Key}" Grid.Column="4">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="$" Foreground="White"/>
                         <TextBlock Text="4" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="5">
+                <Border x:Name="key53" Style="{StaticResource Key}" Grid.Column="5">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="%" Foreground="White"/>
                         <TextBlock Text="5" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="6">
+                <Border x:Name="key54" Style="{StaticResource Key}" Grid.Column="6">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="^" Foreground="White"/>
                         <TextBlock Text="6" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="7">
+                <Border x:Name="key55" Style="{StaticResource Key}" Grid.Column="7">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&amp;" Foreground="White"/>
                         <TextBlock Text="7" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="8">
+                <Border x:Name="key56" Style="{StaticResource Key}" Grid.Column="8">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="*" Foreground="White"/>
                         <TextBlock Text="8" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="9">
+                <Border x:Name="key57" Style="{StaticResource Key}" Grid.Column="9">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="(" Foreground="White"/>
                         <TextBlock Text="9" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="10">
+                <Border x:Name="key48" Style="{StaticResource Key}" Grid.Column="10">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text=")" Foreground="White"/>
                         <TextBlock Text="0" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="11">
+                <Border x:Name="key189" Style="{StaticResource Key}" Grid.Column="11">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="_" Foreground="White"/>
                         <TextBlock Text="-" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="12">
+                <Border x:Name="key187" Style="{StaticResource Key}" Grid.Column="12">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="+" Foreground="White"/>
                         <TextBlock Text="=" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="13" Width="90">
+                <Border x:Name="key8" Style="{StaticResource Key}" Grid.Column="13" Width="90">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Backspace" Foreground="White"/>
 
@@ -211,74 +237,74 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Style="{StaticResource Key}" Grid.Column="0" Width="80">
+                <Border x:Name="key9" Style="{StaticResource Key}" Grid.Column="0" Width="80">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Tab" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="1"  Background="Transparent">
+                <Border x:Name="key81" Style="{StaticResource Key}" Grid.Column="1">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Q" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="2">
+                <Border x:Name="key87" Style="{StaticResource Key}" Grid.Column="2">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="W" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="3">
+                <Border x:Name="key69" Style="{StaticResource Key}" Grid.Column="3">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="E" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="4">
+                <Border x:Name="key82" Style="{StaticResource Key}" Grid.Column="4">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="R" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="5">
+                <Border x:Name="key84" Style="{StaticResource Key}" Grid.Column="5">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="T" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="6">
+                <Border x:Name="key89" Style="{StaticResource Key}" Grid.Column="6">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Y" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="7">
+                <Border x:Name="key85" Style="{StaticResource Key}" Grid.Column="7">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="U" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="8">
+                <Border x:Name="key73" Style="{StaticResource Key}" Grid.Column="8">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="I" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="9">
+                <Border x:Name="key79" Style="{StaticResource Key}" Grid.Column="9">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="O" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="10">
+                <Border x:Name="key80" Style="{StaticResource Key}" Grid.Column="10">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="P" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="11">
+                <Border x:Name="key219" Style="{StaticResource Key}" Grid.Column="11">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="{}{" Foreground="White"/>
                         <TextBlock Text="[" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="12">
+                <Border x:Name="key221" Style="{StaticResource Key}" Grid.Column="12">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="}" Foreground="White"/>
                         <TextBlock Text="]" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="13">
+                <Border x:Name="key220" Style="{StaticResource Key}" Grid.Column="13">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="|" Foreground="White"/>
                         <TextBlock Text="\" Foreground="White"/>
@@ -301,69 +327,69 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <Border Style="{StaticResource Key}" Grid.Column="0" Width="100">
+                <Border x:Name="key20" Style="{StaticResource Key}" Grid.Column="0" Width="100">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Caps Lock" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="1">
+                <Border x:Name="key65" Style="{StaticResource Key}" Grid.Column="1">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="A" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="2">
+                <Border x:Name="key83" Style="{StaticResource Key}" Grid.Column="2">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="S" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="3">
+                <Border x:Name="key68" Style="{StaticResource Key}" Grid.Column="3">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="D" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="4">
+                <Border x:Name="key70" Style="{StaticResource Key}" Grid.Column="4">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="F" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="5">
+                <Border x:Name="key71" Style="{StaticResource Key}" Grid.Column="5">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="G" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="6">
+                <Border x:Name="key72" Style="{StaticResource Key}" Grid.Column="6">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="H" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="7">
+                <Border x:Name="key74" Style="{StaticResource Key}" Grid.Column="7">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="J" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="8">
+                <Border x:Name="key75" Style="{StaticResource Key}" Grid.Column="8">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="K" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="9">
+                <Border x:Name="key76" Style="{StaticResource Key}" Grid.Column="9">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="L" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="10">
+                <Border x:Name="key186" Style="{StaticResource Key}" Grid.Column="10">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text=":" Foreground="White"/>
                         <TextBlock Text=";" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="11">
+                <Border x:Name="key222" Style="{StaticResource Key}" Grid.Column="11">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&quot;" Foreground="White"/>
                         <TextBlock Text="," Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="12" Width="105">
+                <Border x:Name="key13" Style="{StaticResource Key}" Grid.Column="12" Width="105">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Enter" Foreground="White"/>
                     </StackPanel>
@@ -384,65 +410,65 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="2.5*"/>
                 </Grid.ColumnDefinitions>
-                <Border Style="{StaticResource Key}" Grid.Column="0" Width="132">
+                <Border x:Name="key160" Style="{StaticResource Key}" Grid.Column="0" Width="132">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Shift" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="1">
+                <Border x:Name="key90" Style="{StaticResource Key}" Grid.Column="1">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Z" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="2">
+                <Border x:Name="key88" Style="{StaticResource Key}" Grid.Column="2">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="X" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="3">
+                <Border x:Name="key67" Style="{StaticResource Key}" Grid.Column="3">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="C" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="4">
+                <Border x:Name="key86" Style="{StaticResource Key}" Grid.Column="4">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="V" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="5">
+                <Border x:Name="key66" Style="{StaticResource Key}" Grid.Column="5">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="B" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="6">
+                <Border x:Name="key78" Style="{StaticResource Key}" Grid.Column="6">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="N" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="7">
+                <Border x:Name="key77" Style="{StaticResource Key}" Grid.Column="7">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="M" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="8">
+                <Border x:Name="key188" Style="{StaticResource Key}" Grid.Column="8">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&lt;" Foreground="White"/>
                         <TextBlock Text="," Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="9">
+                <Border x:Name="key190" Style="{StaticResource Key}" Grid.Column="9">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="&gt;" Foreground="White"/>
                         <TextBlock Text="." Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="10">
+                <Border x:Name="key191" Style="{StaticResource Key}" Grid.Column="10">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="?" Foreground="White"/>
                         <TextBlock Text="/" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="11" Width="133">
+                <Border x:Name="key161" Style="{StaticResource Key}" Grid.Column="11" Width="133">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Shift" Foreground="White"/>
                     </StackPanel>
@@ -457,29 +483,29 @@
                     <ColumnDefinition Width="1.4*"/>
                     <ColumnDefinition Width="2.3*"/>
                 </Grid.ColumnDefinitions>
-                <Border Style="{StaticResource Key}" Grid.Column="0" Width="80">
+                <Border x:Name="key162" Style="{StaticResource Key}" Grid.Column="0" Width="80">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Ctrl" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="1" Width="370">
+                <Border x:Name="key32" Style="{StaticResource Key}" Grid.Column="1" Width="370">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Space" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="2" Width="70">
+                <Border x:Name="key33" Style="{StaticResource Key}" Grid.Column="2" Width="70">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Page" Foreground="White"/>
                         <TextBlock Text="Up" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="3" Width="70">
+                <Border x:Name="key34" Style="{StaticResource Key}" Grid.Column="3" Width="70">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Page" Foreground="White"/>
                         <TextBlock Text="Down" Foreground="White"/>
                     </StackPanel>
                 </Border>
-                <Border Style="{StaticResource Key}" Grid.Column="4" Width="80">
+                <Border x:Name="key163" Style="{StaticResource Key}" Grid.Column="4" Width="80">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <TextBlock Text="Ctrl" Foreground="White"/>
                     </StackPanel>

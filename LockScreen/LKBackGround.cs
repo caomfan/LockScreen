@@ -38,7 +38,7 @@ namespace LockScreen
             set { _BackType = value; RaisePropertyChanged(() => BackType); }
         }
 
-        private string _FilePath;
+        private string _FilePath =AppDomain.CurrentDomain.BaseDirectory+@"Media\Image\GTGraphics.png";
         /// <summary>
         /// 文件路径
         /// </summary>

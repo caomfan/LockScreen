@@ -169,35 +169,6 @@ namespace LockScreen.UserControls
                     canvasRoot.Children.Remove(currentLine); //从界面上删除最后一条多余的线
                     currentLine = null;
                 }
-
-                //if (Operation == ScreenUnLockOperationType.Check)
-                //{
-                //    Console.WriteLine("playAnimation Check");
-                //    var result = CheckPoint(); //执行图形检查
-                //                               //执行完成动画并触发检查事件
-                //    PlayAnimation(result, () =>
-                //    {
-                //        if (OnCheckedPoint != null)
-                //        {
-                //            this.Dispatcher.BeginInvoke(OnCheckedPoint, this, new CheckPointArgs() { Result = result }); //触发检查完成事件
-                //        }
-                //    });
-
-                //}
-                //else if (Operation == ScreenUnLockOperationType.Remember)
-                //{
-                //    Console.WriteLine("playAnimation Remember");
-                //    RememberPoint(); //记忆绘制的坐标
-                //    var args = new RememberPointArgs() { PointArray = this.PointArray };
-                //    //执行完成动画并触发记忆事件
-                //    PlayAnimation(true, () =>
-                //    {
-                //        if (OnRememberPoint != null)
-                //        {
-                //            this.Dispatcher.BeginInvoke(OnRememberPoint, this, args);   //触发图形记忆事件
-                //        }
-                //    });
-                //}
             }
         }
 
