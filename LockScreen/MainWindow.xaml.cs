@@ -55,7 +55,9 @@ namespace LockScreen
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
-            new LKLockScreen().Show();
+            LKLockScreen lkLockScreen = new LKLockScreen();
+            lkLockScreen.Activate();
+            lkLockScreen.Show();
         }
     }
 }

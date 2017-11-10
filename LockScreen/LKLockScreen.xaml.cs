@@ -1,6 +1,7 @@
 ﻿using LockScreen.UserControls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -9,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -27,11 +29,13 @@ namespace LockScreen
 
             numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
             this.DataContext = MainWindow.VM;
+
+            LoopToPalyAnimation();
         }
 
         private void NumUnlock_UnLockStateEvent(object sender, EventArgs e)
         {
-            if(sender.ToString()=="1")
+            if (sender.ToString() == "1")
             {
                 this.Close();
             }
@@ -66,6 +70,48 @@ namespace LockScreen
             {
                 MessageBox.Show("密码解锁失败！");
             }
+        }
+
+        /// <summary>
+        /// 循环播放动画
+        /// </summary>
+        private void LoopToPalyAnimation()
+        {
+            //创建一个故事板
+            Storyboard storyboard = new Storyboard();
+            //创建关键帧动画
+            DoubleAnimationUsingKeyFrames doubleAnimationUsingKeyFrames = new DoubleAnimationUsingKeyFrames();
+            doubleAnimationUsingKeyFrames.AutoReverse = true;
+            storyboard.Children.Add(doubleAnimationUsingKeyFrames);
+            Storyboard.SetTarget(doubleAnimationUsingKeyFrames, IMG);
+            Storyboard.SetTargetProperty(doubleAnimationUsingKeyFrames, new PropertyPath("Opacity"));
+
+            //创建关键帧
+            EasingDoubleKeyFrame easingDoubleKeyFrame1 = new EasingDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0)));
+            EasingDoubleKeyFrame easingDoubleKeyFrame2 = new EasingDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(1)));
+            EasingDoubleKeyFrame easingDoubleKeyFrame3 = new EasingDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(5)));
+
+            doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame1);
+            doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame2);
+            doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame3);
+            storyboard.Begin();
+        }
+
+        /// <summary>
+        /// 获取文件夹下图像个数
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private int GetImageFileCount(string filePath)
+        {
+            string fileDir = System.IO.Path.GetDirectoryName(filePath);
+            DirectoryInfo dirInfo = new DirectoryInfo(fileDir);
+            if (dirInfo.GetFiles().Count() > 1)
+            {
+                return dirInfo.GetFiles().Count();
+            }
+            else return 0;
+
         }
 
         public IList<string> PointArray

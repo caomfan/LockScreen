@@ -76,7 +76,7 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            <Button Content="确定" Click="Button_Click" Height="30" Width="70" Margin="10 0" Background="Transparent" IsDefault="True">
+            <Button x:Name="btnOk" Content="确定" Click="Button_Click" Height="30" Width="70" Margin="10 0" Background="Transparent" IsDefault="True">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Foreground" Value="White"/>
