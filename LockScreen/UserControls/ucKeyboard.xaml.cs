@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,27 @@ namespace LockScreen.UserControls
         public ucKeyboard()
         {
             InitializeComponent();
+            KeyboardHook keyboardHook = new KeyboardHook();
+            keyboardHook.SetHook();
+            keyboardHook.OnKeyDownEvent += KeyboardHook_OnKeyDownEvent;
+            keyboardHook.OnKeyUpEvent += KeyboardHook_OnKeyUpEvent;
+            this.Unloaded += (s, e) =>
+            {
+                keyboardHook.UnHook();
+                keyboardHook.OnKeyDownEvent -= KeyboardHook_OnKeyDownEvent;
+                keyboardHook.OnKeyUpEvent -= KeyboardHook_OnKeyUpEvent;
+            };
+        }
+
+        private void KeyboardHook_OnKeyUpEvent(object sender, OnKeyUpEvent e)
+        {
+            
+            //throw new NotImplementedException();
+        }
+
+        private void KeyboardHook_OnKeyDownEvent(object sender, KeyDownEvent e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:LockScreen"
         xmlns:uc="clr-namespace:LockScreen.UserControls" x:Name="mw"
         mc:Ignorable="d"
-        Title="锁屏界面" WindowState="Maximized" Background="Transparent" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Topmost="True">
+        Title="锁屏界面" WindowState="Maximized" Background="Transparent" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Topmost="True" Width="900" >
     <Grid Background="#7F262626">
         <Grid>
-            <Image Source="Media/Image/GTGraphics.png" Stretch="Fill"/>
+            <Image Source="Media/Image/Mountainriver.png" Stretch="Fill"/>
         </Grid>
-        <Grid>
-            <uc:ucScreenUnlock Visibility="Collapsed" x:Name="screenUnlock" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="400"
+        <Grid >
+            <uc:ucScreenUnlock  Visibility="Collapsed" x:Name="screenUnlock" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="400"
                         PointArray="{Binding ElementName=mw,Path= PointArray, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Operation="{Binding ElementName=mw,Path=Operation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" PointSize="20.0">
+                        Operation="{Binding ElementName=mw,Path=Operation,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Color="White" PointSize="20.0">
             </uc:ucScreenUnlock>
-            <uc:ucKeyboard Visibility="Visible">
+            <uc:ucKeyboard Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center">
                 
             </uc:ucKeyboard>
         </Grid>

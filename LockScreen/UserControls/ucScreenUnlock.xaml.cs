@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -211,6 +212,11 @@ namespace LockScreen.UserControls
         private void CreatePoint()
         {
             canvasRoot.Children.Clear();
+            DropShadowEffect shadow = new DropShadowEffect();
+            shadow.ShadowDepth = 0;
+            shadow.BlurRadius = 20;
+            shadow.Color = Colors.White;
+
             if (ellipseList == null)
                 ellipseList = new List<Ellipse>();
             if (ellipseList.Count > 0)
@@ -229,7 +235,8 @@ namespace LockScreen.UserControls
                         Width = PointSize,
                         Height = PointSize,
                         Fill = Color,
-                        Tag = string.Format("{0}{1}", i, j)
+                        Tag = string.Format("{0}{1}", i, j),
+                        Effect= shadow
                     };
                     Canvas.SetLeft(ellipse, j * oneColumnWidth + leftDistance);
                     Canvas.SetTop(ellipse, i * oneRowHeight + topDistance);
@@ -512,6 +519,15 @@ namespace LockScreen.UserControls
             {
                 (s as ucScreenUnlock).Refresh();
             })));
+
+        public CornerRadius CornerRadius
+        {
+            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
+        }
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(ucScreenUnlock), new PropertyMetadata(new CornerRadius(10)));
+
         #endregion
 
         #region 其它

@@ -4,20 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LockScreen.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" MinWidth="838">
     <UserControl.Resources>
         <Style TargetType="Border">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
+        <Style x:Key="Key" TargetType="Border">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Margin" Value="0 2 2 2"/>
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBox Height="30" Width="200" Tag="请输入密码">
+            <TextBox Height="30" Width="200" Tag="请输入密码" Background="#33000000">
                 <TextBox.Style>
                     <Style TargetType="{x:Type TextBox}">
                         <Setter Property="BorderBrush" Value="#eaeaea"/>
@@ -29,7 +38,7 @@
                                     <Border BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="3" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                                         <Grid>
                                             <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
-                                            <TextBlock x:Name="WARKTEXT" Text="{TemplateBinding Tag}" Foreground="#adadad" VerticalAlignment="Center" Visibility="Collapsed" Padding="5 0 0 0"/>
+                                            <TextBlock x:Name="WARKTEXT" Text="{TemplateBinding Tag}" Foreground="White" VerticalAlignment="Center" Visibility="Collapsed" Padding="5 0 0 0"/>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
@@ -39,7 +48,7 @@
                                         <Trigger Property="IsFocused" Value="True">
                                             <Setter Property="Background" Value="Transparent"/>
 
-                                            <Setter Property="BorderBrush" Value="#00a4ec"/>
+                                            <Setter Property="BorderBrush" Value="White"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -49,9 +58,7 @@
                 </TextBox.Style>
             </TextBox>
             <Button Content="确定" Height="30" Width="70" Margin="10 0" Background="Transparent">
-                <Button.Effect>
-                    <DropShadowEffect ShadowDepth="0" Color="#00a4ec" Opacity="1" BlurRadius="20"/>
-                </Button.Effect>
+                
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Foreground" Value="White"/>
@@ -59,7 +66,7 @@
                             <Setter.Value>
                                 <ControlTemplate TargetType="Button">
                                     <Border CornerRadius="3" BorderThickness="1" BorderBrush="{TemplateBinding Foreground}" Background="{TemplateBinding Background}">
-                                        
+
                                         <TextBlock x:Name="txt" Text="{TemplateBinding Content}" VerticalAlignment="Center" TextAlignment="Center" Foreground="{TemplateBinding Foreground}"/>
                                     </Border>
                                     <ControlTemplate.Triggers>
@@ -77,5 +84,412 @@
                 </Button.Style>
             </Button>
         </StackPanel>
+        <Grid Grid.Row="1" Width="838" Height="275" VerticalAlignment="Top" Margin="0 50 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="1.7*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Key}">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="~" Foreground="White"/>
+                        <TextBlock Text="`" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="1">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="!" Foreground="White"/>
+                        <TextBlock Text="1" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="2">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="@" Foreground="White"/>
+                        <TextBlock Text="2" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="3">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="#" Foreground="White"/>
+                        <TextBlock Text="3" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="4">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="$" Foreground="White"/>
+                        <TextBlock Text="4" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="5">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="%" Foreground="White"/>
+                        <TextBlock Text="5" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="6">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="^" Foreground="White"/>
+                        <TextBlock Text="6" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="7">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="&amp;" Foreground="White"/>
+                        <TextBlock Text="7" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="8">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="*" Foreground="White"/>
+                        <TextBlock Text="8" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="9">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="(" Foreground="White"/>
+                        <TextBlock Text="9" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="10">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text=")" Foreground="White"/>
+                        <TextBlock Text="0" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="11">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="_" Foreground="White"/>
+                        <TextBlock Text="-" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="12">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="+" Foreground="White"/>
+                        <TextBlock Text="=" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="13" Width="90">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Backspace" Foreground="White"/>
+
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Key}" Grid.Column="0" Width="80">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Tab" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="1"  Background="Transparent">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Q" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="2">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="W" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="3">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="E" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="4">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="R" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="5">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="T" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="6">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Y" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="7">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="U" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="8">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="I" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="9">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="O" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="10">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="P" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="11">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="{}{" Foreground="White"/>
+                        <TextBlock Text="[" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="12">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="}" Foreground="White"/>
+                        <TextBlock Text="]" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="13">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="|" Foreground="White"/>
+                        <TextBlock Text="\" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.9*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Key}" Grid.Column="0" Width="100">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Caps Lock" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="1">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="A" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="2">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="S" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="3">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="D" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="4">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="F" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="5">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="G" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="6">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="H" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="7">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="J" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="8">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="K" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="9">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="L" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="10">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text=":" Foreground="White"/>
+                        <TextBlock Text=";" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="11">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="&quot;" Foreground="White"/>
+                        <TextBlock Text="," Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="12" Width="105">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Enter" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2.5*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Key}" Grid.Column="0" Width="132">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Shift" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="1">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Z" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="2">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="X" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="3">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="C" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="4">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="V" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="5">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="B" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="6">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="N" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="7">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="M" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="8">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="&lt;" Foreground="White"/>
+                        <TextBlock Text="," Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="9">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="&gt;" Foreground="White"/>
+                        <TextBlock Text="." Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="10">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="?" Foreground="White"/>
+                        <TextBlock Text="/" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="11" Width="133">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Shift" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="6.2*"/>
+                    <ColumnDefinition Width="1.25*"/>
+                    <ColumnDefinition Width="1.25*"/>
+                    <ColumnDefinition Width="1.4*"/>
+                    <ColumnDefinition Width="2.3*"/>
+                </Grid.ColumnDefinitions>
+                <Border Style="{StaticResource Key}" Grid.Column="0" Width="80">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Ctrl" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="1" Width="370">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Space" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="2" Width="70">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Page" Foreground="White"/>
+                        <TextBlock Text="Up" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="3" Width="70">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Page" Foreground="White"/>
+                        <TextBlock Text="Down" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="4" Width="80">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Ctrl" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Key}" Grid.Column="5" Width="133">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="Close" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

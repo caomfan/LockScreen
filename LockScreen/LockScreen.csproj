@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BackGroundTypeConvert.cs" />
+    <Compile Include="UserControls\KeyboardHook.cs" />
     <Compile Include="UserControls\ucKeyboard.xaml.cs">
       <DependentUpon>ucKeyboard.xaml</DependentUpon>
     </Compile>
@@ -61,6 +62,7 @@
       <DependentUpon>ucScreenUnlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Win32Api.cs" />
     <Page Include="UserControls\ucKeyboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
