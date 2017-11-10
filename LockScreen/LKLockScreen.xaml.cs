@@ -29,19 +29,28 @@ namespace LockScreen
 
             numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
             this.DataContext = MainWindow.VM;
-
+            ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
+            storyboard.Completed += Storyboard_Completed;
             LoopToPalyAnimation();
         }
 
+        /// <summary>
+        /// 图片个数
+        /// </summary>
+        public int ImgCount { get; set; }
+        public int index { get; set; } = 0;
+        public List<string> ImgPathList { get; set; } = new List<string>();
+        public Storyboard storyboard = new Storyboard();
         private void NumUnlock_UnLockStateEvent(object sender, EventArgs e)
         {
             if (sender.ToString() == "1")
             {
+                GC.Collect();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("解锁失败！");
+                //MessageBox.Show("解锁失败！");
             }
         }
 
@@ -64,11 +73,12 @@ namespace LockScreen
         {
             if (e.Result)
             {
+                GC.Collect();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("密码解锁失败！");
+                //MessageBox.Show("密码解锁失败！");
             }
         }
 
@@ -78,7 +88,8 @@ namespace LockScreen
         private void LoopToPalyAnimation()
         {
             //创建一个故事板
-            Storyboard storyboard = new Storyboard();
+
+
             //创建关键帧动画
             DoubleAnimationUsingKeyFrames doubleAnimationUsingKeyFrames = new DoubleAnimationUsingKeyFrames();
             doubleAnimationUsingKeyFrames.AutoReverse = true;
@@ -88,12 +99,22 @@ namespace LockScreen
 
             //创建关键帧
             EasingDoubleKeyFrame easingDoubleKeyFrame1 = new EasingDoubleKeyFrame(0, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0)));
-            EasingDoubleKeyFrame easingDoubleKeyFrame2 = new EasingDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(1)));
+            EasingDoubleKeyFrame easingDoubleKeyFrame2 = new EasingDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(3)));
             EasingDoubleKeyFrame easingDoubleKeyFrame3 = new EasingDoubleKeyFrame(1, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(5)));
 
             doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame1);
             doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame2);
             doubleAnimationUsingKeyFrames.KeyFrames.Add(easingDoubleKeyFrame3);
+            storyboard.Begin();
+
+        }
+
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+            index++;
+            if (MainWindow.VM.FilePath == ImgPathList[index % ImgCount])
+                index++;
+            MainWindow.VM.FilePath = ImgPathList[index % ImgCount];
             storyboard.Begin();
         }
 
@@ -104,9 +125,14 @@ namespace LockScreen
         /// <returns></returns>
         private int GetImageFileCount(string filePath)
         {
+            ImgPathList.Clear();
             string fileDir = System.IO.Path.GetDirectoryName(filePath);
             DirectoryInfo dirInfo = new DirectoryInfo(fileDir);
-            if (dirInfo.GetFiles().Count() > 1)
+            foreach (FileInfo item in dirInfo.GetFiles())
+            {
+                ImgPathList.Add(item.FullName);
+            }
+            if (dirInfo.GetFiles().Count() >= 1)
             {
                 return dirInfo.GetFiles().Count();
             }
