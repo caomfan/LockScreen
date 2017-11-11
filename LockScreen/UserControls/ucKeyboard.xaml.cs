@@ -55,7 +55,7 @@ namespace LockScreen.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(txtPassword.Text=="88888888")
+            if(txtPassword.Text==Unity.GetNumPass())
             {
               
                 UnLockStateEvent?.Invoke(1, new EventArgs());

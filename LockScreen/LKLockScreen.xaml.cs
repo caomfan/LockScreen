@@ -227,7 +227,7 @@ namespace LockScreen
             set { SetValue(PointArrayProperty, value); }
         }
         public static readonly DependencyProperty PointArrayProperty =
-            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(new List<string>() { "00", "01", "02", "12" }));
+            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(Unity.GetDrawPass()));
 
         public string Operation
         {
