@@ -8,12 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/flash/time.swf")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/gif/gif.gif")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/image/autumn.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/image/gtgraphics.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/image/mountainriver.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/image/s.h.i.e.l.d.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("media/video/demo.wmv")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lock.ico")]
 
 

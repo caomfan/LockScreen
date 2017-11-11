@@ -392,7 +392,7 @@ namespace LockScreen.UserControls
             currentLine.X1 = currentLine.X2 = ellipseCenterPoint.X;
             currentLine.Y1 = currentLine.Y2 = ellipseCenterPoint.Y;
             currentPointArray.Add(ellipse.Tag.ToString());
-            Console.WriteLine(string.Join(",", currentPointArray));
+            //Console.WriteLine(string.Join(",", currentPointArray));
             currentLineList.Add(currentLine);
             canvasRoot.Children.Add(currentLine);
 

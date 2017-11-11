@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace LockScreen
 {
@@ -21,6 +22,7 @@ namespace LockScreen
     /// </summary>
     public partial class LKLockScreen : Window
     {
+        #region 构造函数
         public LKLockScreen()
         {
             InitializeComponent();
@@ -32,8 +34,12 @@ namespace LockScreen
             ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
             storyboard.Completed += Storyboard_Completed;
             LoopToPalyAnimation();
+            this.Closed += LKLockScreen_Closed;
         }
 
+        #endregion
+
+        #region 字段
         /// <summary>
         /// 图片个数
         /// </summary>
@@ -41,6 +47,34 @@ namespace LockScreen
         public int index { get; set; } = 0;
         public List<string> ImgPathList { get; set; } = new List<string>();
         public Storyboard storyboard = new Storyboard();
+        #endregion
+
+        #region 多线程单例
+        private static LKLockScreen lkLockScreen;
+        private static readonly object locker = new object();
+        public static LKLockScreen GetInstance()
+        {
+            if(lkLockScreen==null)
+            {
+                lock(locker)
+                {
+                    if (lkLockScreen == null)
+                    {
+                        lkLockScreen = new LKLockScreen();
+                    }
+                }
+                
+            }
+            return lkLockScreen;
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            lkLockScreen = null;
+        }
+        #endregion
+
+        #region Method
         private void NumUnlock_UnLockStateEvent(object sender, EventArgs e)
         {
             if (sender.ToString() == "1")
@@ -113,15 +147,6 @@ namespace LockScreen
 
         }
 
-        private void Storyboard_Completed(object sender, EventArgs e)
-        {
-            index++;
-            if (MainWindow.VM.FilePath == ImgPathList[index % ImgCount])
-                index++;
-            MainWindow.VM.FilePath = ImgPathList[index % ImgCount];
-            storyboard.Begin();
-        }
-
         /// <summary>
         /// 获取文件夹下图像个数
         /// </summary>
@@ -143,7 +168,33 @@ namespace LockScreen
             else return 0;
 
         }
+        #endregion
 
+        #region 事件
+
+        public event EventHandler<EventArgs> OnCloseEvent;
+
+        private void LKLockScreen_Closed(object sender, EventArgs e)
+        {
+            //返回1，关闭窗口
+            OnCloseEvent?.Invoke(1, new EventArgs());
+        }
+        /// <summary>
+        /// 动画完成，播放另外一个动画
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Storyboard_Completed(object sender, EventArgs e)
+        {
+            index++;
+            if (MainWindow.VM.FilePath == ImgPathList[index % ImgCount])
+                index++;
+            MainWindow.VM.FilePath = ImgPathList[index % ImgCount];
+            storyboard.Begin();
+        }
+        #endregion
+
+        #region 依赖属性
         public IList<string> PointArray
         {
             get { return (IList<string>)GetValue(PointArrayProperty); }
@@ -159,5 +210,6 @@ namespace LockScreen
         }
         public static readonly DependencyProperty OperationProperty =
             DependencyProperty.Register("Operation", typeof(string), typeof(MainWindow), new PropertyMetadata("Check"));
+        #endregion
     }
 }

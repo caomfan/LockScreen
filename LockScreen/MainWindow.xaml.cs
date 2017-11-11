@@ -28,6 +28,18 @@ namespace LockScreen
             InitializeComponent();
             VM = new LKBackGround();
             this.DataContext = VM;
+            LKNotifyIcon lkNotifyIcon = new LKNotifyIcon();
+            lkNotifyIcon.OnChangeWindowState += LkNotifyIcon_OnChangeWindowState;
+        }
+
+        private void LkNotifyIcon_OnChangeWindowState(object sender, NotifyEvent e)
+        {
+            this.WindowState = e.WindowState;
+            if(e.IsShowWindow)
+            {
+                this.Show();
+                this.Activate();
+            }
         }
 
         private static System.Windows.Threading.DispatcherTimer timeTrigger;
@@ -58,22 +70,37 @@ namespace LockScreen
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //this.WindowState = WindowState.Minimized;
-            //LKLockScreen lkLockScreen = new LKLockScreen();
-            //lkLockScreen.Activate();
-            //lkLockScreen.Show();
-            timeTrigger = new System.Windows.Threading.DispatcherTimer();
-            timeTrigger.Tick += new EventHandler(timeCycle);
-            timeTrigger.Interval = TimeSpan.FromSeconds(1);
-            timeTrigger.Start();
+            this.Hide();
+            if(timeTrigger==null)
+            {
+                timeTrigger = new System.Windows.Threading.DispatcherTimer();
+                timeTrigger.Tick += new EventHandler(timeCycle);
+                timeTrigger.Interval = TimeSpan.FromSeconds(1);
+                timeTrigger.Start();
+            }
+            else
+            {
+                timeTrigger.Stop();
+                timeTrigger.Start();
+            }
+            
         }
+
+        //时钟事件
         public  void timeCycle(object sender, EventArgs e)
         {
             KeyboardHook keyboardHook = new KeyboardHook();
             if(keyboardHook.NoOpera(MainWindow.VM.SeccondLock*1000))
             {
                 this.WindowState = WindowState.Minimized;
-                LKLockScreen lkLockScreen = new LKLockScreen();
+                LKLockScreen lkLockScreen = LKLockScreen.GetInstance();
+                lkLockScreen.OnCloseEvent += (s, e2) =>
+                {
+                    if(s.ToString()=="1")
+                    {
+                        timeTrigger.Start();
+                    }
+                };
                 lkLockScreen.Activate();
                 lkLockScreen.Show();
                 timeTrigger.Stop();

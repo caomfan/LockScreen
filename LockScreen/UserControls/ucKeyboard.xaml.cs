@@ -47,9 +47,9 @@ namespace LockScreen.UserControls
                 numKey = NumKeyDataConvert(e.KeyData);
             else
                 numKey = e.KeyData;
-
+            
             Border border = this.FindName("key" + numKey) as Border;
-            Console.WriteLine(e.KeyData);
+           // Console.WriteLine(e.KeyData);
             if (border != null)
             {
                 border.Background = new SolidColorBrush(Colors.Transparent);
