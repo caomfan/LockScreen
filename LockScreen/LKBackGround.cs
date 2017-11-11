@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace LockScreen
 {
@@ -15,17 +17,17 @@ namespace LockScreen
         public int SeccondLock
         {
             get { return _SeccondLock; }
-            set { _SeccondLock = value; RaisePropertyChanged(()=>SeccondLock); }
+            set { _SeccondLock = value; RaisePropertyChanged(() => SeccondLock); }
         }
 
-        private PasswordType _PassType=PasswordType.Num;
+        private PasswordType _PassType = PasswordType.Num;
         /// <summary>
         /// 密码通过类型
         /// </summary>
         public PasswordType PassType
         {
             get { return _PassType; }
-            set { _PassType = value;RaisePropertyChanged(() => PassType); }
+            set { _PassType = value; RaisePropertyChanged(() => PassType); }
         }
 
         private BackGroundType _BackType;
@@ -38,7 +40,7 @@ namespace LockScreen
             set { _BackType = value; RaisePropertyChanged(() => BackType); }
         }
 
-        private string _FilePath =AppDomain.CurrentDomain.BaseDirectory+@"Media\Image\GTGraphics.png";
+        private string _FilePath = AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
         /// 文件路径
         /// </summary>
@@ -47,6 +49,29 @@ namespace LockScreen
             get { return _FilePath; }
             set { _FilePath = value; RaisePropertyChanged(() => FilePath); }
         }
+
+        private ImageSource _LKImagesource;
+        /// <summary>
+        /// 图片源
+        /// </summary>
+
+        public ImageSource LKImagesource
+        {
+            get
+            {
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                if (System.IO.File.Exists(FilePath))
+                    image.UriSource = new System.Uri(FilePath);
+                image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
+                image.EndInit();
+                image.Freeze();
+                return image;
+
+            }
+            set { _LKImagesource = value; this.RaisePropertyChanged(() => LKImagesource); }
+        }
+
 
         /// <summary>
         /// 背景类型
@@ -64,8 +89,8 @@ namespace LockScreen
         /// </summary>
         public enum PasswordType
         {
-            Num=101,
-            Draw=102
+            Num = 101,
+            Draw = 102
         }
 
         /// <summary>
@@ -77,14 +102,14 @@ namespace LockScreen
         {
             switch (type)
             {
-                case 0:return "*.JPG;*.PNG;*.BMP;*.GIF|*.JPG;*.PNG;*.BMP;*.GIF";
+                case 0: return "*.JPG;*.PNG;*.BMP;*.GIF|*.JPG;*.PNG;*.BMP;*.GIF";
                 case 1: return "*.GIF|*.GIF";
                 case 2: return "*.WMV;*.AVI;*.MP4;*.MPG|*.WMV;*.AVI;*.MP4;*.MPG";
                 case 3: return "*.SWF|*.SWF";
                 default:
                     break;
             }
-            return string.Empty;    
-        } 
+            return string.Empty;
+        }
     }
 }
