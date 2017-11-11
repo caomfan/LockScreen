@@ -34,6 +34,7 @@ namespace LockScreen
             numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
             keyboardHook.OnKeyDownEvent += KeyboardHook_OnKeyDownEvent;
             keyboardHook.OnKeyUpEvent += KeyboardHook_OnKeyUpEvent;
+            Win32Api.ManageTaskManager(1);
             this.DataContext = MainWindow.VM;
             ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
             storyboard.Completed += Storyboard_Completed;
@@ -49,10 +50,9 @@ namespace LockScreen
                 OnCloseEvent?.Invoke(1, new EventArgs());
                 keyboardHook.OnKeyDownEvent -= KeyboardHook_OnKeyDownEvent;
                 keyboardHook.OnKeyUpEvent -= KeyboardHook_OnKeyUpEvent;
+                Win32Api.ManageTaskManager(0);
             };
         }
-
-      
 
         #endregion
 

@@ -101,7 +101,9 @@ namespace LockScreen.UserControls
                     return -1;
                 if ((int)Control.ModifierKeys == (int)Keys.Control)
                     return -1;
-               
+                if ((int)Control.ModifierKeys == (int)Keys.Alt)
+                    return -1;
+
 
             }
 

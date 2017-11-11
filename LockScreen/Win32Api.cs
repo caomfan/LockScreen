@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -64,6 +65,23 @@ namespace LockScreen
 
         [DllImport("User32.dll")]
         public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
-        
+
+        /// <summary>
+        /// 管理任务管理器的方法
+        /// </summary>
+        /// <param name="arg">0：启用任务管理器 1：禁用任务管理器</param>
+        public static void ManageTaskManager(int arg)
+        {
+            RegistryKey currentUser = Registry.CurrentUser;
+            RegistryKey system = currentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System", true);
+            //如果system项不存在就创建这个项
+            if (system == null)
+            {
+                system = currentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Policies\System");
+            }
+            system.SetValue("DisableTaskmgr", arg, RegistryValueKind.DWord);
+            currentUser.Close();
+        }
+
     }
 }

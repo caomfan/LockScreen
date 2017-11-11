@@ -7,7 +7,7 @@
         xmlns:uc="clr-namespace:LockScreen.UserControls" x:Name="mw"
         xmlns:convert="clr-namespace:LockScreen.Converters"
         mc:Ignorable="d"
-        Title="锁屏界面" WindowState="Normal" Background="Transparent" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Topmost="False" Width="900" >
+        Title="锁屏界面" WindowState="Maximized" Background="Transparent" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" Topmost="True" Width="900" >
     <Window.Resources>
         <convert:TypeToVisible x:Key="typetovisible"/>
     </Window.Resources>
