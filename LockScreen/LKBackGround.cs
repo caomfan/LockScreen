@@ -47,10 +47,23 @@ namespace LockScreen
         public string FilePath
         {
             get { return _FilePath; }
-            set { _FilePath = value; RaisePropertyChanged(() => FilePath); }
+            set
+            {
+                _FilePath = value; RaisePropertyChanged(() => FilePath);
+
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                if (System.IO.File.Exists(FilePath))
+                {
+                    image.UriSource = new System.Uri(value);
+                    image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
+                    image.EndInit();
+                    image.Freeze();
+                }
+                LKImagesource = image;
+            }
         }
 
-        private ImageSource _LKImagesource;
         /// <summary>
         /// 图片源
         /// </summary>
@@ -62,14 +75,17 @@ namespace LockScreen
                 BitmapImage image = new BitmapImage();
                 image.BeginInit();
                 if (System.IO.File.Exists(FilePath))
+                {
                     image.UriSource = new System.Uri(FilePath);
-                image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
-                image.EndInit();
-                image.Freeze();
+                    image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
+                    image.EndInit();
+                    image.Freeze();
+                }
+
                 return image;
 
             }
-            set { _LKImagesource = value; this.RaisePropertyChanged(() => LKImagesource); }
+            set { this.RaisePropertyChanged(() => LKImagesource); }
         }
 
 

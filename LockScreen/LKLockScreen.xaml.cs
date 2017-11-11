@@ -29,13 +29,30 @@ namespace LockScreen
             screenUnlock.OnCheckedPoint += ScreenUnlock_OnCheckedPoint;
             screenUnlock.OnRememberPoint += ScreenUnlock_OnRememberPoint;
 
+            KeyboardHook keyboardHook = KeyboardHook.GetInstance();
+            keyboardHook.SetHook();
             numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
+            keyboardHook.OnKeyDownEvent += KeyboardHook_OnKeyDownEvent;
+            keyboardHook.OnKeyUpEvent += KeyboardHook_OnKeyUpEvent;
             this.DataContext = MainWindow.VM;
             ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
             storyboard.Completed += Storyboard_Completed;
-            LoopToPalyAnimation();
-            this.Closed += LKLockScreen_Closed;
+
+            if (ImgCount > 1)
+            {
+                LoopToPalyAnimation();
+            }
+            this.Closed += (s, e) =>
+            {
+                //返回1，关闭窗口
+                keyboardHook.UnHook();
+                OnCloseEvent?.Invoke(1, new EventArgs());
+                keyboardHook.OnKeyDownEvent -= KeyboardHook_OnKeyDownEvent;
+                keyboardHook.OnKeyUpEvent -= KeyboardHook_OnKeyUpEvent;
+            };
         }
+
+      
 
         #endregion
 
@@ -54,16 +71,16 @@ namespace LockScreen
         private static readonly object locker = new object();
         public static LKLockScreen GetInstance()
         {
-            if(lkLockScreen==null)
+            if (lkLockScreen == null)
             {
-                lock(locker)
+                lock (locker)
                 {
                     if (lkLockScreen == null)
                     {
                         lkLockScreen = new LKLockScreen();
                     }
                 }
-                
+
             }
             return lkLockScreen;
         }
@@ -159,14 +176,13 @@ namespace LockScreen
             DirectoryInfo dirInfo = new DirectoryInfo(fileDir);
             foreach (FileInfo item in dirInfo.GetFiles())
             {
-                ImgPathList.Add(item.FullName);
-            }
-            if (dirInfo.GetFiles().Count() >= 1)
-            {
-                return dirInfo.GetFiles().Count();
-            }
-            else return 0;
+                if (item.Extension.Equals(".JPG", StringComparison.OrdinalIgnoreCase) || item.Extension.Equals(".PNG", StringComparison.OrdinalIgnoreCase) || item.Extension.Equals(".BMP", StringComparison.OrdinalIgnoreCase) || item.Extension.Equals(".GIF", StringComparison.OrdinalIgnoreCase))
+                {
+                    ImgPathList.Add(item.FullName);
+                }
 
+            }
+            return ImgPathList.Count;
         }
         #endregion
 
@@ -191,6 +207,16 @@ namespace LockScreen
                 index++;
             MainWindow.VM.FilePath = ImgPathList[index % ImgCount];
             storyboard.Begin();
+        }
+
+        private void KeyboardHook_OnKeyUpEvent(object sender, OnKeyUpEvent e)
+        {
+            numUnlock.ChangeKeyState(e.KeyData, 1);
+        }
+
+        private void KeyboardHook_OnKeyDownEvent(object sender, KeyDownEvent e)
+        {
+            numUnlock.ChangeKeyState(e.KeyData, 0);
         }
         #endregion
 

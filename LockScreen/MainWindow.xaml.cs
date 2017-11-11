@@ -30,6 +30,7 @@ namespace LockScreen
             this.DataContext = VM;
             LKNotifyIcon lkNotifyIcon = new LKNotifyIcon();
             lkNotifyIcon.OnChangeWindowState += LkNotifyIcon_OnChangeWindowState;
+           
         }
 
         private void LkNotifyIcon_OnChangeWindowState(object sender, NotifyEvent e)

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LockScreen"
         xmlns:convert="clr-namespace:LockScreen.Converters"
         mc:Ignorable="d"
-        Title="锁屏设置" Height="401.97" Width="322.309" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"  ShowInTaskbar="False">
+        Title="锁屏设置" Height="417.97" Width="322.309" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"  ShowInTaskbar="False">
     <Window.Resources>
         <Style TargetType="RadioButton">
             <Setter Property="Margin" Value="0 5"/>
@@ -39,7 +39,7 @@
                     <RadioButton Content="图案密码" IsChecked="{Binding PassType ,Mode=TwoWay,Converter={StaticResource typeConver},ConverterParameter=draw}"/>
                 </StackPanel>
             </GroupBox>
-            <Button Click="Button_Click" Content="确定" Margin="0 0 0 10" Width="75"  HorizontalAlignment="Center"/>
         </StackPanel>
+        <Button Click="Button_Click" Content="确定" Margin="0 0 0 10" Width="75" Height="30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

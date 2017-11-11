@@ -25,55 +25,32 @@ namespace LockScreen.UserControls
         public ucKeyboard()
         {
             InitializeComponent();
-           
-            KeyboardHook keyboardHook = new KeyboardHook();
-            keyboardHook.SetHook();
-            keyboardHook.OnKeyDownEvent += KeyboardHook_OnKeyDownEvent;
-            keyboardHook.OnKeyUpEvent += KeyboardHook_OnKeyUpEvent;
-            this.Unloaded += (s, e) =>
-            {
-                keyboardHook.UnHook();
-                keyboardHook.OnKeyDownEvent -= KeyboardHook_OnKeyDownEvent;
-                keyboardHook.OnKeyUpEvent -= KeyboardHook_OnKeyUpEvent;
-            };
+            this.DataContext = MainWindow.VM;
         }
 
-        private void KeyboardHook_OnKeyUpEvent(object sender, OnKeyUpEvent e)
-        {
-            int numKey = 0;
-            numKey = Convert.ToInt32(e.KeyData);
+        /// <summary>
+        /// 改变虚拟键盘按键状态
+        /// </summary>
+        /// <param name="keyData">key值 例如：65</param>
+        /// <param name="keyState">按键状态 1为弹起，0为按下</param>
+        public void ChangeKeyState(int keyData,int keyState)
+        { 
 
-            if (numKey >= 96 && numKey <= 105)
-                numKey = NumKeyDataConvert(e.KeyData);
-            else
-                numKey = e.KeyData;
-            
-            Border border = this.FindName("key" + numKey) as Border;
-           // Console.WriteLine(e.KeyData);
+            if (keyData >= 96 && keyData <= 105)
+                keyData = NumKeyDataConvert(keyData);
+
+            Border border = this.FindName("key" + keyData) as Border;
+            // Console.WriteLine(e.KeyData);
             if (border != null)
             {
+                if(keyState==1)
                 border.Background = new SolidColorBrush(Colors.Transparent);
+                else if(keyState==0)
+                {
+                    BrushConverter brush = new BrushConverter();
+                    border.Background = (Brush)brush.ConvertFromString("#7F808080");
+                }
             }
-            //throw new NotImplementedException();
-        }
-
-        private void KeyboardHook_OnKeyDownEvent(object sender, KeyDownEvent e)
-        {
-            int numKey = 0;
-            numKey = Convert.ToInt32(e.KeyData);
-
-            if (numKey >= 96 && numKey <= 105)
-                numKey = NumKeyDataConvert(e.KeyData);
-            else
-                numKey = e.KeyData;
-
-            Border border = this.FindName("key" + numKey) as Border;
-            if (border!=null)
-            {
-                BrushConverter brush = new BrushConverter();
-                border.Background = (Brush)brush.ConvertFromString("#7F808080");
-            }
-            //throw new NotImplementedException();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -107,7 +84,7 @@ namespace LockScreen.UserControls
             (this.Resources["keyBoardLeave"] as Storyboard).Begin();
         }
 
-        private int NumKeyDataConvert(int keyData)
+        private  int NumKeyDataConvert(int keyData)
         {
             return keyData - 48;
         }

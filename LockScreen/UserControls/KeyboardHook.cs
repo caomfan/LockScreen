@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 
 namespace LockScreen.UserControls
 {
@@ -14,6 +15,16 @@ namespace LockScreen.UserControls
         Win32Api.HookProc KeyboardHookDelegate;
 
         Win32Api.LASTINPUTINFO lastInPut = new Win32Api.LASTINPUTINFO();
+        private static KeyboardHook keyboardHook;
+        public static KeyboardHook GetInstance()
+        {
+            if(keyboardHook==null)
+            {
+                keyboardHook = new KeyboardHook();
+            }
+            return keyboardHook;
+
+        }
 
         /// <summary>
         /// 安装键盘钩子
@@ -36,9 +47,11 @@ namespace LockScreen.UserControls
         /// </summary>
         public void UnHook()
         {
-
-            Win32Api.UnhookWindowsHookEx(hHook);
-
+            if (hHook != 0)
+            {
+                Win32Api.UnhookWindowsHookEx(hHook);
+                hHook = 0;
+            }
         }
 
         /// <summary>
@@ -74,6 +87,22 @@ namespace LockScreen.UserControls
                     // 此处触发键盘抬起事件
                     OnKeyUpEvent(this, new OnKeyUpEvent() { KeyData = keyData });
                 }
+                if (KeyDataFromHook.vkCode == 91)//截获左边WIN键
+                {
+                    return -1;
+                }
+                if (KeyDataFromHook.vkCode == 92)//截获右边WIN键
+                {
+                    return -1;
+                }
+                if (KeyDataFromHook.vkCode == (int)Keys.Tab)
+                    return -1;
+                if (KeyDataFromHook.vkCode == (int)Keys.Escape)
+                    return -1;
+                if ((int)Control.ModifierKeys == (int)Keys.Control)
+                    return -1;
+               
+
             }
 
             return Win32Api.CallNextHookEx(hHook, nCode, wParam, lParam);
