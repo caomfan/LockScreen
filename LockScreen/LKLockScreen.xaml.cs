@@ -46,6 +46,8 @@ namespace LockScreen
             if (sender.ToString() == "1")
             {
                 GC.Collect();
+                storyboard.Completed -= Storyboard_Completed;
+                storyboard.Stop();
                 this.Close();
             }
             else
@@ -74,6 +76,8 @@ namespace LockScreen
             if (e.Result)
             {
                 GC.Collect();
+                storyboard.Completed -= Storyboard_Completed;
+                storyboard.Stop();
                 this.Close();
             }
             else

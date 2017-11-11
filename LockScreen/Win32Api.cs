@@ -18,7 +18,7 @@ namespace LockScreen
 
         public const int WH_KEYBOARD_LL = 13;
 
-
+       
 
         [StructLayout(LayoutKind.Sequential)] //声明键盘钩子的封送结构类型
         public class KeyboardHookStruct
@@ -34,6 +34,12 @@ namespace LockScreen
 
             public int dwExtraInfo;
 
+        }
+
+        public struct LASTINPUTINFO
+        {
+            public uint cbSize;
+            public uint dwTime;
         }
 
         public delegate int HookProc(int nCode, Int32 wParam, IntPtr lParam);
@@ -55,5 +61,9 @@ namespace LockScreen
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("User32.dll")]
+        public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+        
     }
 }

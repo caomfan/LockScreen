@@ -1,8 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using LockScreen.UserControls;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -27,6 +29,8 @@ namespace LockScreen
             VM = new LKBackGround();
             this.DataContext = VM;
         }
+
+        private static System.Windows.Threading.DispatcherTimer timeTrigger;
 
         /// <summary>
         /// 选择文件路径
@@ -54,10 +58,26 @@ namespace LockScreen
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
-            LKLockScreen lkLockScreen = new LKLockScreen();
-            lkLockScreen.Activate();
-            lkLockScreen.Show();
+            //this.WindowState = WindowState.Minimized;
+            //LKLockScreen lkLockScreen = new LKLockScreen();
+            //lkLockScreen.Activate();
+            //lkLockScreen.Show();
+            timeTrigger = new System.Windows.Threading.DispatcherTimer();
+            timeTrigger.Tick += new EventHandler(timeCycle);
+            timeTrigger.Interval = TimeSpan.FromSeconds(1);
+            timeTrigger.Start();
+        }
+        public  void timeCycle(object sender, EventArgs e)
+        {
+            KeyboardHook keyboardHook = new KeyboardHook();
+            if(keyboardHook.NoOpera(MainWindow.VM.SeccondLock*1000))
+            {
+                this.WindowState = WindowState.Minimized;
+                LKLockScreen lkLockScreen = new LKLockScreen();
+                lkLockScreen.Activate();
+                lkLockScreen.Show();
+                timeTrigger.Stop();
+            }
         }
     }
 }
