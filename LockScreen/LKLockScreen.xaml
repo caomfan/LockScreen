@@ -11,10 +11,10 @@
     <Window.Resources>
         <convert:TypeToVisible x:Key="typetovisible"/>
     </Window.Resources>
-    <Grid Background="#7F262626">
-        <Grid>
-            <Image x:Name="IMG" Opacity="1" Source="{Binding LKImagesource,Mode=TwoWay}" Stretch="Fill"/>
-        </Grid>
+    <Grid Background="{Binding BackgroundColor,Mode=TwoWay}">
+        <ContentControl x:Name="content" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            
+        </ContentControl>
         <Grid >
             <uc:ucScreenUnlock  Visibility="{Binding Path=PassType, Converter={StaticResource typetovisible},ConverterParameter=draw}" x:Name="screenUnlock" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300" Height="400"
                         PointArray="{Binding ElementName=mw,Path= PointArray, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

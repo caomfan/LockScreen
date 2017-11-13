@@ -14,7 +14,6 @@ namespace LockScreen.UserControls
 
         Win32Api.HookProc KeyboardHookDelegate;
 
-        Win32Api.LASTINPUTINFO lastInPut = new Win32Api.LASTINPUTINFO();
         private static KeyboardHook keyboardHook;
         public static KeyboardHook GetInstance()
         {
@@ -111,27 +110,6 @@ namespace LockScreen.UserControls
 
         }
 
-
-        /// <summary>
-        /// 无操作多少秒后返回True，有操作则返回false
-        /// </summary>
-        /// <param name="milli">毫秒</param>
-        /// <returns></returns>
-        public bool NoOpera(long milli)
-        {
-            //配置时间内无操作锁定
-            lastInPut.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(lastInPut);
-            Win32Api.GetLastInputInfo(ref lastInPut);
-
-            long noOperationTime = System.Environment.TickCount - lastInPut.dwTime;
-
-            if (noOperationTime > milli)
-            {
-                //退出程序
-                return true;
-            }
-            return false;
-        }
 
         /// <summary>
         /// 键按下事件

@@ -30,16 +30,21 @@ namespace LockScreen
             this.DataContext = VM;
             LKNotifyIcon lkNotifyIcon = new LKNotifyIcon();
             lkNotifyIcon.OnChangeWindowState += LkNotifyIcon_OnChangeWindowState;
-           
+
         }
 
+        /// <summary>
+        /// 托盘通知改变窗体状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LkNotifyIcon_OnChangeWindowState(object sender, NotifyEvent e)
         {
-            this.WindowState = e.WindowState;
-            if(e.IsShowWindow)
+            if (e.IsShowWindow)
             {
                 this.Show();
                 this.Activate();
+                this.WindowState = e.WindowState;
             }
         }
 
@@ -72,7 +77,8 @@ namespace LockScreen
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            if(timeTrigger==null)
+
+            if (timeTrigger == null)
             {
                 timeTrigger = new System.Windows.Threading.DispatcherTimer();
                 timeTrigger.Tick += new EventHandler(timeCycle);
@@ -84,20 +90,23 @@ namespace LockScreen
                 timeTrigger.Stop();
                 timeTrigger.Start();
             }
-            
         }
 
-        //时钟事件
-        public  void timeCycle(object sender, EventArgs e)
+        /// <summary>
+        /// 时钟事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void timeCycle(object sender, EventArgs e)
         {
-            KeyboardHook keyboardHook = new KeyboardHook();
-            if(keyboardHook.NoOpera(MainWindow.VM.SeccondLock*1000))
+            LastInputInfoHook lastInputInfoHook = new LastInputInfoHook();
+            if (lastInputInfoHook.NoOpera(MainWindow.VM.SeccondLock * 1000))
             {
                 this.WindowState = WindowState.Minimized;
                 LKLockScreen lkLockScreen = LKLockScreen.GetInstance();
                 lkLockScreen.OnCloseEvent += (s, e2) =>
                 {
-                    if(s.ToString()=="1")
+                    if (s.ToString() == "1")
                     {
                         timeTrigger.Start();
                     }
@@ -105,6 +114,32 @@ namespace LockScreen
                 lkLockScreen.Activate();
                 lkLockScreen.Show();
                 timeTrigger.Stop();
+            }
+        }
+
+        /// <summary>
+        /// 窗体最小化时，隐藏窗体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Minimized)
+            {
+                this.Hide();
+            }
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            if (cb.IsChecked == true)
+            {
+                stackpanelSetting.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                stackpanelSetting.Visibility = Visibility.Collapsed;
             }
         }
     }

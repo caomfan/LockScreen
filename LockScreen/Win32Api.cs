@@ -67,7 +67,7 @@ namespace LockScreen
         public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
         /// <summary>
-        /// 管理任务管理器的方法
+        /// 管理任务管理器的方法 0：启用任务管理器 1：禁用任务管理器
         /// </summary>
         /// <param name="arg">0：启用任务管理器 1：禁用任务管理器</param>
         public static void ManageTaskManager(int arg)

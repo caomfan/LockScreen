@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>LOCK.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -53,6 +56,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -61,8 +65,10 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BackGroundTypeConvert.cs" />
     <Compile Include="LKNotifyIcon.cs" />
-    <Compile Include="Unity\Unity.cs" />
+    <Compile Include="Unity\GIfImage.cs" />
+    <Compile Include="Unity\ConfigManager.cs" />
     <Compile Include="UserControls\KeyboardHook.cs" />
+    <Compile Include="UserControls\LastInputInfoHook.cs" />
     <Compile Include="UserControls\ucKeyboard.xaml.cs">
       <DependentUpon>ucKeyboard.xaml</DependentUpon>
     </Compile>
@@ -119,6 +125,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.config" />
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -132,6 +139,17 @@
     <Resource Include="LOCK.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ShockwaveFlashObjects">
+      <Guid>{D27CDB6B-AE6D-11CF-96B8-444553540000}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

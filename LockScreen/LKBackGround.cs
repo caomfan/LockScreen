@@ -9,6 +9,15 @@ namespace LockScreen
 {
     public class LKBackGround : ViewModel.ViewModelBase
     {
+        private SolidColorBrush _BackgroundColor = Brushes.Transparent;
+        /// <summary>
+        /// 背景颜色
+        /// </summary>
+        public SolidColorBrush BackgroundColor
+        {
+            get { return _BackgroundColor; }
+            set { _BackgroundColor = value;this.RaisePropertyChanged(() => BackgroundColor); }
+        }
 
         private int _SeccondLock = 60;
         /// <summary>
@@ -51,16 +60,20 @@ namespace LockScreen
             {
                 _FilePath = value; RaisePropertyChanged(() => FilePath);
 
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                if (System.IO.File.Exists(FilePath))
+                if(BackType==BackGroundType.Image)
                 {
-                    image.UriSource = new System.Uri(value);
-                    image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
-                    image.EndInit();
-                    image.Freeze();
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    if (System.IO.File.Exists(FilePath))
+                    {
+                        image.UriSource = new System.Uri(value);
+                        image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
+                        image.EndInit();
+                        image.Freeze();
+                    }
+                    LKImagesource = image;
                 }
-                LKImagesource = image;
+               
             }
         }
 
@@ -73,15 +86,20 @@ namespace LockScreen
             get
             {
                 BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                if (System.IO.File.Exists(FilePath))
+                if (BackType == BackGroundType.Image)
                 {
-                    image.UriSource = new System.Uri(FilePath);
-                    image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
-                    image.EndInit();
-                    image.Freeze();
-                }
+                   
+                    image.BeginInit();
+                    if (System.IO.File.Exists(FilePath))
+                    {
+                        image.UriSource = new System.Uri(FilePath);
+                        image.DecodePixelWidth = (int)System.Windows.SystemParameters.WorkArea.Width;
+                        image.EndInit();
+                        image.Freeze();
+                    }
 
+                   
+                }
                 return image;
 
             }

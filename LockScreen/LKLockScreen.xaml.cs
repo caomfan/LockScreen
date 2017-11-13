@@ -14,6 +14,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using LockScreen.Unity;
+using System.Windows.Forms.Integration;
 
 namespace LockScreen
 {
@@ -26,23 +28,26 @@ namespace LockScreen
         public LKLockScreen()
         {
             InitializeComponent();
+            
+            //图案解锁事件订阅
             screenUnlock.OnCheckedPoint += ScreenUnlock_OnCheckedPoint;
             screenUnlock.OnRememberPoint += ScreenUnlock_OnRememberPoint;
 
+            //键盘解锁，安装键盘钩子
             KeyboardHook keyboardHook = KeyboardHook.GetInstance();
             keyboardHook.SetHook();
             numUnlock.UnLockStateEvent += NumUnlock_UnLockStateEvent;
             keyboardHook.OnKeyDownEvent += KeyboardHook_OnKeyDownEvent;
             keyboardHook.OnKeyUpEvent += KeyboardHook_OnKeyUpEvent;
-            Win32Api.ManageTaskManager(1);
-            this.DataContext = MainWindow.VM;
-            ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
-            storyboard.Completed += Storyboard_Completed;
 
-            if (ImgCount > 1)
-            {
-                LoopToPalyAnimation();
-            }
+            //屏蔽任务管理器
+            Win32Api.ManageTaskManager(1);
+
+            this.DataContext = MainWindow.VM;
+
+            //初始化背景
+            InitBackground();
+
             this.Closed += (s, e) =>
             {
                 //返回1，关闭窗口
@@ -57,6 +62,7 @@ namespace LockScreen
         #endregion
 
         #region 字段
+        private Image IMG { get; set; }
         /// <summary>
         /// 图片个数
         /// </summary>
@@ -67,7 +73,7 @@ namespace LockScreen
         #endregion
 
         #region 多线程单例
-        private static LKLockScreen lkLockScreen;
+        private static LKLockScreen lkLockScreen ;
         private static readonly object locker = new object();
         public static LKLockScreen GetInstance()
         {
@@ -92,6 +98,63 @@ namespace LockScreen
         #endregion
 
         #region Method
+
+        /// <summary>
+        /// 初始化背景
+        /// </summary>
+        private void InitBackground()
+        {
+            if (MainWindow.VM.BackType == LKBackGround.BackGroundType.Image)
+            {
+                IMG = new Image();
+                Binding bind = new Binding()
+                {
+                    Source = MainWindow.VM,
+                    Path = new PropertyPath("LKImagesource"),
+                    Mode = BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+                IMG.SetBinding(Image.SourceProperty,bind);
+                this.content.Content = IMG;
+
+                storyboard.Completed += Storyboard_Completed;
+                ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
+                if (ImgCount > 1)
+                {
+                    LoopToPalyAnimation();
+                }
+            }
+            else if (MainWindow.VM.BackType == LKBackGround.BackGroundType.Gif)
+            {
+                GifImage gifImage = new GifImage(MainWindow.VM.FilePath);
+                gifImage.Stretch = Stretch.Fill;
+                this.content.Content = gifImage;
+                gifImage.StartAnimate();
+            }
+            else if (MainWindow.VM.BackType == LKBackGround.BackGroundType.Video)
+            {
+                MediaElement media = new MediaElement();
+                media.Source =new Uri( MainWindow.VM.FilePath);
+                media.LoadedBehavior = MediaState.Manual;
+                media.Play();
+                //填充整个屏幕
+                media.Stretch = Stretch.Fill;
+                this.content.Content = media;
+                //当媒体播放结束时重复播放
+                media.MediaEnded += (s, e) =>
+                {
+                    media.Position = TimeSpan.Zero;
+                    media.Play();
+                };
+            }
+            
+        }
+
+        /// <summary>
+        /// 判断数字解锁是否成功
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumUnlock_UnLockStateEvent(object sender, EventArgs e)
         {
             if (sender.ToString() == "1")
@@ -227,7 +290,7 @@ namespace LockScreen
             set { SetValue(PointArrayProperty, value); }
         }
         public static readonly DependencyProperty PointArrayProperty =
-            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(Unity.GetDrawPass()));
+            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(ConfigManager.GetDrawPass()));
 
         public string Operation
         {
@@ -236,6 +299,8 @@ namespace LockScreen
         }
         public static readonly DependencyProperty OperationProperty =
             DependencyProperty.Register("Operation", typeof(string), typeof(MainWindow), new PropertyMetadata("Check"));
+
         #endregion
     }
 }
+

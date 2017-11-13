@@ -8,7 +8,7 @@ using System.Text;
 
 namespace LockScreen
 {
-    public class Unity
+    public class ConfigManager
     {
         /// <summary>
         /// 获取绘图密码

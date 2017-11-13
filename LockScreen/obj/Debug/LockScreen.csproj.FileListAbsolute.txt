@@ -38,5 +38,7 @@ E:\程序源码\LockScreen\LockScreen\obj\Debug\MainWindow.baml
 E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.g.resources
 E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.Properties.Resources.resources
 E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.csproj.GenerateResource.Cache
-E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.csprojResolveAssemblyReference.cache
 E:\程序源码\LockScreen\LockScreen\bin\Debug\LockScreen.exe.config
+E:\程序源码\LockScreen\LockScreen\obj\Debug\Interop.ShockwaveFlashObjects.dll
+E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.csproj.ResolveComReference.cache
+E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.csprojResolveAssemblyReference.cache
