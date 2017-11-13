@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-E:\程序源码\LockScreen\LockScreen\obj\Debug\
+E:\开源项目\LockScreen\LockScreen\obj\Debug\
 LockScreen
 none
 false
 DEBUG;TRACE
-E:\程序源码\LockScreen\LockScreen\App.xaml
+E:\开源项目\LockScreen\LockScreen\App.xaml
 49302102
 
-18507801887
+18-177595505
 17-858285979
 UserControls\ucKeyboard.xaml;UserControls\ucScreenUnlock.xaml;LKLockScreen.xaml;MainWindow.xaml;
 

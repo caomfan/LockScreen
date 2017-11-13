@@ -88,22 +88,24 @@ namespace LockScreen.UserControls
                 }
                 if (KeyDataFromHook.vkCode == 91)//截获左边WIN键
                 {
-                    return -1;
+                    return 1;
                 }
                 if (KeyDataFromHook.vkCode == 92)//截获右边WIN键
                 {
-                    return -1;
+                    return 1;
                 }
-                if (KeyDataFromHook.vkCode == (int)Keys.Tab)
-                    return -1;
-                if (KeyDataFromHook.vkCode == (int)Keys.Escape)
-                    return -1;
-                if ((int)Control.ModifierKeys == (int)Keys.Control)
-                    return -1;
-                if ((int)Control.ModifierKeys == (int)Keys.Alt)
-                    return -1;
-
-
+                if (KeyDataFromHook.vkCode == (int)Keys.Escape && (int)Control.ModifierKeys == (int)Keys.Control)//截获Ctrl+ESC键
+                {
+                    return 1;
+                }
+                if (KeyDataFromHook.vkCode == (int)Keys.F4 && (int)Control.ModifierKeys == (int)Keys.Alt)//截获ALT+F4
+                {
+                    return 1;
+                }
+                if (KeyDataFromHook.vkCode == (int)Keys.Tab && (int)Control.ModifierKeys == (int)Keys.Alt)//截获ALT+TAB
+                {
+                    return 1;
+                }
             }
 
             return Win32Api.CallNextHookEx(hHook, nCode, wParam, lParam);
