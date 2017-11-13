@@ -9,7 +9,7 @@ namespace LockScreen
 {
     public class LKBackGround : ViewModel.ViewModelBase
     {
-        private SolidColorBrush _BackgroundColor = Brushes.Transparent;
+        private SolidColorBrush _BackgroundColor =(SolidColorBrush)( new BrushConverter() .ConvertFromString("#33000000"));
         /// <summary>
         /// 背景颜色
         /// </summary>

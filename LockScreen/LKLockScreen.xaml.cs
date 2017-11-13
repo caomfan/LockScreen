@@ -106,23 +106,28 @@ namespace LockScreen
         {
             if (MainWindow.VM.BackType == LKBackGround.BackGroundType.Image)
             {
-                IMG = new Image();
-                Binding bind = new Binding()
-                {
-                    Source = MainWindow.VM,
-                    Path = new PropertyPath("LKImagesource"),
-                    Mode = BindingMode.TwoWay,
-                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                };
-                IMG.SetBinding(Image.SourceProperty,bind);
-                this.content.Content = IMG;
-
-                storyboard.Completed += Storyboard_Completed;
                 ImgCount = GetImageFileCount(MainWindow.VM.FilePath);
-                if (ImgCount > 1)
+                if(ImgCount>=1)
                 {
-                    LoopToPalyAnimation();
+                    IMG = new Image();
+                    Binding bind = new Binding()
+                    {
+                        Source = MainWindow.VM,
+                        Path = new PropertyPath("LKImagesource"),
+                        Mode = BindingMode.TwoWay,
+                        UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                    };
+                    IMG.SetBinding(Image.SourceProperty, bind);
+                    this.content.Content = IMG;
+
+                    storyboard.Completed += Storyboard_Completed;
+
+                    if (ImgCount > 1)
+                    {
+                        LoopToPalyAnimation();
+                    }
                 }
+               
             }
             else if (MainWindow.VM.BackType == LKBackGround.BackGroundType.Gif)
             {
@@ -290,7 +295,7 @@ namespace LockScreen
             set { SetValue(PointArrayProperty, value); }
         }
         public static readonly DependencyProperty PointArrayProperty =
-            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(ConfigManager.GetDrawPass()));
+            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(LKLockScreen), new PropertyMetadata(ConfigManager.GetDrawPass()));
 
         public string Operation
         {
@@ -298,7 +303,7 @@ namespace LockScreen
             set { SetValue(OperationProperty, value); }
         }
         public static readonly DependencyProperty OperationProperty =
-            DependencyProperty.Register("Operation", typeof(string), typeof(MainWindow), new PropertyMetadata("Check"));
+            DependencyProperty.Register("Operation", typeof(string), typeof(LKLockScreen), new PropertyMetadata("Check"));
 
         #endregion
     }

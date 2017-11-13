@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LockScreen"
+        xmlns:local="clr-namespace:LockScreen" x:Name="window"
         xmlns:convert="clr-namespace:LockScreen.Converters"
+        xmlns:uc="clr-namespace:LockScreen.UserControls"
         mc:Ignorable="d"
         Title="锁屏设置" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" StateChanged="Window_StateChanged" ShowInTaskbar="False" SizeToContent="WidthAndHeight">
     <Window.Resources>
@@ -12,6 +13,7 @@
             <Setter Property="Margin" Value="0 5"/>
         </Style>
         <convert:BackGroundTypeConvert x:Key="typeConver"/>
+        <convert:TypeToVisible x:Key="typetovisible"/>
     </Window.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
@@ -40,7 +42,7 @@
             <GroupBox Header="锁屏密码类型" Margin="10">
                 <StackPanel Margin="0 10">
                     <RadioButton Content="数字密码" IsChecked="{Binding PassType,Mode=TwoWay, Converter={StaticResource typeConver},ConverterParameter=num}"/>
-                    <RadioButton Content="图案密码" IsChecked="{Binding PassType ,Mode=TwoWay,Converter={StaticResource typeConver},ConverterParameter=draw}"/>
+                    <RadioButton Content="图案密码" IsChecked="{Binding PassType ,Mode=TwoWay, Converter={StaticResource typeConver},ConverterParameter=draw}"/>
                 </StackPanel>
             </GroupBox>
             <Grid  Margin="0 0 0 10" VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -87,12 +89,17 @@
                     <ComboBoxItem Content="UniformToFill"/>
                 </ComboBox>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <RadioButton Content="数字密码" IsChecked="True"/>
-                <RadioButton Content="图像密码" Margin="10 0 0 0" VerticalAlignment="Center"/>
-            </StackPanel>
             <GroupBox Header="设置密码" Margin="10">
-                <ContentControl Height="180"/>
+                <Grid Margin="10">
+                    <!--数字密码-->
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding PassType,Mode=TwoWay, Converter={StaticResource typetovisible},ConverterParameter=num}">
+                        <TextBlock Text="密码"/>
+                        <TextBox Width="160" x:Name="txtPwd" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5 0 0 0"/>
+                    </StackPanel>
+                    <!--图像密码-->
+                    <uc:ucScreenUnlock Operation="Remember" Visibility="{Binding PassType,Mode=TwoWay,Converter={StaticResource typetovisible},ConverterParameter=draw}"
+                                       x:Name="ucScreenUnlock" PointArray="{Binding PointArray,ElementName=window,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Color="Black" PointSize="15.0" Width="160" Height="160"/>
+                </Grid>
             </GroupBox>
         </StackPanel>
     </Grid>

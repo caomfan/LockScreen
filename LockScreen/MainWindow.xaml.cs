@@ -30,7 +30,13 @@ namespace LockScreen
             this.DataContext = VM;
             LKNotifyIcon lkNotifyIcon = new LKNotifyIcon();
             lkNotifyIcon.OnChangeWindowState += LkNotifyIcon_OnChangeWindowState;
+            ucScreenUnlock.OnRememberPoint += UcScreenUnlock_OnRememberPoint;
+            txtPwd.Text = ConfigManager.GetNumPass();
+        }
 
+        private void UcScreenUnlock_OnRememberPoint(object sender, RememberPointArgs e)
+        {
+            ConfigManager.UpdateAppConfig("drawpass", string.Join("|", e.PointArray)); 
         }
 
         /// <summary>
@@ -76,6 +82,10 @@ namespace LockScreen
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if(MainWindow.VM.PassType==LKBackGround.PasswordType.Num)
+            {
+                ConfigManager.UpdateAppConfig("numpass", txtPwd.Text);
+            }
             this.Hide();
 
             if (timeTrigger == null)
@@ -142,5 +152,18 @@ namespace LockScreen
                 stackpanelSetting.Visibility = Visibility.Collapsed;
             }
         }
+
+        #region 依赖属性
+        public IList<string> PointArray
+        {
+            get { return (IList<string>)GetValue(PointArrayProperty); }
+            set { SetValue(PointArrayProperty, value); }
+        }
+        public static readonly DependencyProperty PointArrayProperty =
+            DependencyProperty.Register("PointArray", typeof(IList<string>), typeof(MainWindow), new PropertyMetadata(new List<string>()));
+
+        #endregion
+
+        
     }
 }

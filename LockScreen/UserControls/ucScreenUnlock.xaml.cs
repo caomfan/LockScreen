@@ -238,7 +238,7 @@ namespace LockScreen.UserControls
         /// </summary>
         private void RememberPoint()
         {
-            if (PointArray.Count > 0)
+            if (Operation==ScreenUnLockOperationType.Remember)
             {
                 PointArray.Clear();
                 foreach (var item in currentPointArray)
