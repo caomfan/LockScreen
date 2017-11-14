@@ -39,11 +39,16 @@ namespace LockScreen
         ///<returns></returns> 
         public static string GetAppConfig(string strKey)
         {
-            if (ConfigurationManager.AppSettings.AllKeys.Contains(strKey))
+            string file = System.Windows.Forms.Application.ExecutablePath;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+            foreach (string key in config.AppSettings.Settings.AllKeys)
             {
-                return ConfigurationManager.AppSettings[strKey];
+                if (key == strKey)
+                {
+                    return config.AppSettings.Settings[strKey].Value.ToString();
+                }
             }
-            return "";
+            return null;
         }
 
         ///<summary>  
@@ -51,11 +56,19 @@ namespace LockScreen
         ///</summary>  
         ///<param name="newKey"></param>  
         ///<param name="newValue"></param>  
-        public static void  UpdateAppConfig(string newKey, string newValue)
+        public static void UpdateAppConfig(string newKey, string newValue)
         {
             string file = System.Windows.Forms.Application.ExecutablePath;
             Configuration config = ConfigurationManager.OpenExeConfiguration(file);
-            if (ConfigurationManager.AppSettings.AllKeys.Contains(newKey))
+            bool exist = false;
+            foreach (string key in config.AppSettings.Settings.AllKeys)
+            {
+                if (key == newKey)
+                {
+                    exist = true;
+                }
+            }
+            if (exist)
             {
                 config.AppSettings.Settings.Remove(newKey);
             }

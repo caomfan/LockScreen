@@ -25,6 +25,7 @@ namespace LockScreen.UserControls
         public ucScreenUnlock()
         {
             InitializeComponent();
+            PointArray =ConfigManager.GetDrawPass();
             this.Loaded += ScreenUnlock_Loaded;
             this.Unloaded += ScreenUnlock_Unloaded;
             this.MouseMove += ScreenUnlock_MouseMove;
@@ -568,19 +569,12 @@ namespace LockScreen.UserControls
     }
     public class CheckPointArgs : EventArgs
     {
-        public CheckPointArgs()
-        {
-        }
 
         public bool Result { get; set; }
     }
 
     public class RememberPointArgs : EventArgs
     {
-        public RememberPointArgs()
-        {
-        }
-
         public IList<string> PointArray { get; set; }
     }
 }

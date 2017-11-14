@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lock.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("app.config")]
 
 

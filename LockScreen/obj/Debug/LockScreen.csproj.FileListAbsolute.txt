@@ -45,3 +45,4 @@ E:\程序源码\LockScreen\LockScreen\obj\Debug\LockScreen.csprojResolveAssembly
 E:\开源项目\LockScreen\LockScreen\bin\Debug\LockScreen.exe.config
 E:\开源项目\LockScreen\LockScreen\obj\Debug\Interop.ShockwaveFlashObjects.dll
 E:\开源项目\LockScreen\LockScreen\obj\Debug\LockScreen.csproj.ResolveComReference.cache
+E:\程序源码\LockScreen\LockScreen\bin\Debug\App.config
